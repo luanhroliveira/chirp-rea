@@ -70,6 +70,25 @@ tasks.register<JavaExec>("generateLogos") {
     systemProperty("java.awt.headless", "true")
 }
 
+// Renders the promotional video with FFmpeg: ./gradlew :app:promoVideo
+// (-Pstills=3,10,20 writes PNG stills instead; -Pffmpeg=<path> if not on PATH)
+tasks.register<JavaExec>("promoVideo") {
+    group = "chirp-rea"
+    description = "Draws the CHIRP-REA promo video into build/promo/chirp-rea-promo.mp4."
+    val main = kotlin.jvm("desktop").compilations.getByName("main")
+    dependsOn(main.compileTaskProvider)
+    classpath = files(main.output.allOutputs, main.runtimeDependencyFiles)
+    mainClass.set("chirprea.app.tools.PromoVideoKt")
+    workingDir = projectDir
+    systemProperty("java.awt.headless", "true")
+    maxHeapSize = "2g"
+    args(
+        layout.buildDirectory.dir("promo").get().asFile.absolutePath,
+        providers.gradleProperty("ffmpeg").orElse("ffmpeg").get(),
+        providers.gradleProperty("stills").orElse("").get(),
+    )
+}
+
 // Draws the application icon: ./gradlew :app:generateIcon
 tasks.register<JavaExec>("generateIcon") {
     group = "chirp-rea"
