@@ -1,0 +1,29 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.kotlin/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local files
+local.properties
+*.log
+
+# Personal radio images and exports (may contain your channels, DTMF/ANI codes)
+configs/
+*.img
+
+# Personal logo gallery at the project root (third-party artwork; loaded at
+# runtime, not redistributed). Logos shipped with the app live in
+# app/src/desktopMain/resources/logos and ARE tracked.
+/logos/

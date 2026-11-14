@@ -1,0 +1,75 @@
+# Builds the Windows installer and publishes it on GitHub Releases.
+#
+# Release a new version:
+#   git tag v1.0.0
+#   git push origin v1.0.0
+#
+# The tag version (without the "v") becomes the installer version, e.g.
+# CHIRP-REA-1.0.0.exe. It can also be started by hand from the Actions tab.
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versão (ex.: 1.0.1). Cria a tag v<versão>."
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Versão
+        id: version
+        shell: pwsh
+        run: |
+          $v = if ("${{ github.event_name }}" -eq "workflow_dispatch") { "${{ inputs.version }}" } else { "${{ github.ref_name }}".TrimStart("v") }
+          "value=$v" >> $env:GITHUB_OUTPUT
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Testes
+        run: ./gradlew.bat build --console=plain
+
+      - name: Instalador .exe
+        # Quoted: PowerShell would otherwise split "-PappVersion=1.0.1" at the dots.
+        run: ./gradlew.bat :app:packageExe "-PappVersion=${{ steps.version.outputs.value }}" --console=plain
+
+      - name: SHA-256
+        id: sha
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem app/build/compose/binaries/main/exe/*.exe | Select-Object -First 1
+          "file=$($exe.FullName)" >> $env:GITHUB_OUTPUT
+          "hash=$((Get-FileHash $exe.FullName).Hash)" >> $env:GITHUB_OUTPUT
+
+      - name: Publicar no GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.value }}
+          name: CHIRP-REA ${{ steps.version.outputs.value }}
+          files: ${{ steps.sha.outputs.file }}
+          body: |
+            ## Instalar no Windows
+
+            Baixe **CHIRP-REA-${{ steps.version.outputs.value }}.exe** abaixo e dê dois cliques.
+            Não precisa de Java nem de senha de administrador.
+
+            No aviso do SmartScreen, clique em **Mais informações › Executar assim mesmo**
+            (o instalador não é assinado digitalmente).
+
+            SHA-256: `${{ steps.sha.outputs.hash }}`
+
+            Documentação: [docs/](https://github.com/${{ github.repository }}/blob/v${{ steps.version.outputs.value }}/docs/README.md)
