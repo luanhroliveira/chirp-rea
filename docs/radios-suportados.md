@@ -2,7 +2,7 @@
 
 | Rádio | Driver (classe CHIRP) | Situação |
 |---|---|---|
-| **Baofeng UV-21 Pro** (original, firmware "COLOR PRO") | `UV21ProGPS` | download, envio e logo **validados num rádio real** |
+| **Baofeng UV-21 Pro** (original, firmware "COLOR PRO") | `UV21ProGPS` | download, envio e logo **validados num rádio real**, no Windows e na web |
 | Baofeng UV-21ProGPS | `UV21ProGPS` | mesmo protocolo do UV-21 Pro |
 | Baofeng UV-17ProGPS | `UV17ProGPS` | portado do CHIRP; testado com rádio simulado |
 | Baofeng UV-17Pro | `UV17Pro` | portado do CHIRP; testado com rádio simulado |

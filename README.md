@@ -9,7 +9,8 @@ Multiplatform** a partir do [CHIRP](https://chirpmyradio.com). Usa os mesmos
 arquivos `.img` e `.csv` do CHIRP e os mesmos drivers, e acrescenta recursos como
 a troca da logo da tela ao ligar.
 
-Validado num **Baofeng UV-21 Pro** real: download, envio e troca de logo.
+Validado num **Baofeng UV-21 Pro** real (protocolo UV21ProGPS): download, envio e troca
+de logo, tanto no aplicativo para Windows quanto na versão web.
 
 ## Usar no navegador (sem instalar)
 
@@ -17,6 +18,9 @@ Validado num **Baofeng UV-21 Pro** real: download, envio e troca de logo.
 no **Google Chrome** e no **Microsoft Edge** do computador, inclusive para baixar e
 enviar para o rádio pelo cabo USB (Web Serial). Tudo roda no seu navegador; nada é
 enviado para servidores. Detalhes em [docs/web.md](docs/web.md).
+
+> ✅ **Homologada no UV-21 Pro GPS (UV21ProGPS):** a versão web foi testada num rádio
+> real — download, envio e troca da logo da tela ao ligar — e aprovada.
 
 ## Baixar e instalar (Windows)
 
@@ -91,7 +95,7 @@ enviando apenas comandos de identificação. → [docs/diagnostico.md](docs/diag
 
 | Rádio | Situação |
 |---|---|
-| **Baofeng UV-21 Pro** (original) | download, envio e logo validados em rádio real |
+| **Baofeng UV-21 Pro** (original) | download, envio e logo validados em rádio real, no Windows e na web |
 | Baofeng UV-21ProGPS, UV-17ProGPS, UV-17Pro, UV-21 Pro V2 | portados do CHIRP, testados com rádio simulado |
 
 Detalhes e diferenças entre os modelos em [docs/radios-suportados.md](docs/radios-suportados.md).

@@ -6,6 +6,9 @@
 nada para instalar. Os arquivos e a comunicação com o rádio ficam no seu
 computador: nada é enviado para servidores.
 
+> ✅ **Homologada no UV-21 Pro GPS (UV21ProGPS):** download, envio e troca da logo
+> da tela ao ligar testados num rádio real, e aprovados.
+
 ## Navegadores
 
 | Navegador | Abrir/editar/salvar arquivos | Conversar com o rádio |
