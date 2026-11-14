@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CHIRP-REA</title>
+  <meta name="description" content="Programador de rádios compatível com o CHIRP, direto no navegador (Web Serial).">
+  <link rel="icon" type="image/png" href="chirp-rea-64.png">
+  <style>
+    html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #121218; }
+    #loading {
+      position: fixed; inset: 0; display: flex; flex-direction: column; gap: 16px;
+      align-items: center; justify-content: center; color: #e6e6ef;
+      font: 15px system-ui, sans-serif;
+    }
+    #loading img { width: 96px; height: 96px; }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <img src="chirp-rea-128.png" alt="">
+    <div>Carregando o CHIRP-REA…</div>
+    <noscript>Ative o JavaScript para usar o CHIRP-REA.</noscript>
+  </div>
+  <script>
+    // Compose replaces the page content once the app starts; hide the splash then.
+    new MutationObserver((_, obs) => {
+      if (document.querySelector("canvas")) { document.getElementById("loading")?.remove(); obs.disconnect(); }
+    }).observe(document.body, { childList: true, subtree: true });
+  </script>
+  <script src="chirp-rea.js"></script>
+</body>
+</html>

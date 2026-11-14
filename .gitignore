@@ -4,8 +4,10 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 .kotlin/
 
-# IDE
+# IDE / local tool config
 .idea/
+.claude/
+kotlin-js-store/
 *.iml
 .vscode/
 out/

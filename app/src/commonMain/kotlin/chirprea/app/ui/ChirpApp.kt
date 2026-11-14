@@ -39,17 +39,23 @@ fun ChirpTheme(dark: Boolean, content: @Composable () -> Unit) {
     MaterialTheme(colorScheme = if (dark) darkColorScheme() else lightColorScheme(), content = content)
 }
 
+const val DESKTOP_WELCOME =
+    "Arquivo › Novo para começar, Arquivo › Abrir para carregar um .csv ou .img,\n" +
+        "Rádio › Baixar do rádio para ler a memória de um rádio,\n" +
+        "ou Rádio › Alterar logo do rádio (Alt+L) para trocar só a logo."
+
 /** Main window content: document tabs, the memory grid and a status bar. */
 @Composable
 fun ChirpApp(
     state: AppState,
     onChangeLogo: ((RadioDocument) -> Unit)? = null,
     appIcon: androidx.compose.ui.graphics.painter.Painter? = null,
+    welcomeText: String = DESKTOP_WELCOME,
 ) {
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         Column(Modifier.fillMaxSize()) {
             if (state.documents.isEmpty()) {
-                Welcome(Modifier.weight(1f), appIcon)
+                Welcome(Modifier.weight(1f), appIcon, welcomeText)
             } else {
                 Tabs(state)
                 HorizontalDivider()
@@ -137,7 +143,7 @@ private fun SubTabs(tabs: List<RadioTab>, selected: RadioTab, onSelect: (RadioTa
 }
 
 @Composable
-private fun Welcome(modifier: Modifier, appIcon: androidx.compose.ui.graphics.painter.Painter?) {
+private fun Welcome(modifier: Modifier, appIcon: androidx.compose.ui.graphics.painter.Painter?, text: String) {
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
             if (appIcon != null) {
@@ -147,9 +153,8 @@ private fun Welcome(modifier: Modifier, appIcon: androidx.compose.ui.graphics.pa
             }
             Text("CHIRP-REA", style = MaterialTheme.typography.headlineMedium)
             Text(
-                "Arquivo › Novo para começar, Arquivo › Abrir para carregar um .csv ou .img,\n" +
-                    "Rádio › Baixar do rádio para ler a memória de um rádio,\n" +
-                    "ou Rádio › Alterar logo do rádio (Alt+L) para trocar só a logo.",
+                text,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

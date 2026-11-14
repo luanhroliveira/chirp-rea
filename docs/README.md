@@ -2,6 +2,7 @@
 
 | Guia | Conteúdo |
 |---|---|
+| [Versão web](web.md) | usar no navegador, sem instalar (Chrome/Edge) |
 | [Instalação](instalacao.md) | instalador do Windows, SmartScreen, cabo, compilar a partir do código |
 | [Primeiros passos](primeiros-passos.md) | janela, menus, atalhos e fluxo de uso |
 | [Memórias](memorias.md) | grade de canais, colunas, tons, duplex |

@@ -11,6 +11,13 @@ a troca da logo da tela ao ligar.
 
 Validado num **Baofeng UV-21 Pro** real: download, envio e troca de logo.
 
+## Usar no navegador (sem instalar)
+
+**[▶ Abrir o CHIRP-REA na web](https://luanhroliveira.github.io/chirp-rea/)** — funciona
+no **Google Chrome** e no **Microsoft Edge** do computador, inclusive para baixar e
+enviar para o rádio pelo cabo USB (Web Serial). Tudo roda no seu navegador; nada é
+enviado para servidores. Detalhes em [docs/web.md](docs/web.md).
+
 ## Baixar e instalar (Windows)
 
 **[⬇ Baixar a versão mais recente](../../releases/latest)** — na página da release,
@@ -113,7 +120,7 @@ Toda a documentação de uso está em [`docs/`](docs/README.md):
 | 2 | Família Baofeng UV-17Pro / UV-21 Pro: canais, configurações, bancos, logo | ✅ validado em rádio real |
 | 2 | Instalador Windows com ícone próprio | ✅ |
 | 3 | Demais drivers do CHIRP (~195) | ⏳ |
-| 4 | Versão web (Kotlin/Wasm + Web Serial) | ⏳ |
+| 4 | Versão web (Kotlin/Wasm + Web Serial) no GitHub Pages | ✅ (logo na web: ⏳) |
 
 ## Para desenvolvedores
 
@@ -131,7 +138,7 @@ Trabalho derivado do CHIRP, de Dan Smith e dos colaboradores do projeto
 ([kk7ds/chirp](https://github.com/kk7ds/chirp)), distribuído sob a **GNU General
 Public License v3.0**. Veja [LICENSE](LICENSE).
 
-- As configurações prontas em `app/src/desktopMain/resources/stock_configs/` vêm do CHIRP.
+- As configurações prontas em `app/src/commonMain/resources/stock_configs/` vêm do CHIRP.
 - O ícone e as 8 logos originais são deste projeto, desenhados em código
   (`tools/AppIcon.kt` e `tools/LogoArt.kt`), sob a mesma licença.
 - As imagens em `app/src/desktopMain/resources/logos/terceiros/` são de terceiros,

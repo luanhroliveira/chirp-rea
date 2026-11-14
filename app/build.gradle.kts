@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -11,7 +12,20 @@ kotlin {
 
     jvm("desktop")
 
+    // Web version (GitHub Pages): ./gradlew :app:wasmJsBrowserDistribution
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        outputModuleName.set("chirp-rea")
+        browser {
+            commonWebpackConfig { outputFileName = "chirp-rea.js" }
+        }
+        binaries.executable()
+    }
+
     sourceSets {
+        val wasmJsMain by getting {
+            dependencies { implementation(libs.kotlinx.browser) }
+        }
         commonMain.dependencies {
             implementation(project(":core"))
             implementation(compose.runtime)
