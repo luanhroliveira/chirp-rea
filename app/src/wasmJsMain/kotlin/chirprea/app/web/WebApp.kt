@@ -205,7 +205,12 @@ private fun MenuBar(state: AppState, a: WebActions) {
         Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surfaceContainer).padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text("CHIRP-REA", fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(end = 12.dp))
+        Text(
+            "CHIRP-REA",
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(end = 12.dp),
+        )
         Menu("Arquivo") { close ->
             Item("Novo") { close(); a.newCsv() }
             Item("Abrir .csv ou .img…") { close(); a.open() }
