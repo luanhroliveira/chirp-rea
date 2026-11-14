@@ -50,12 +50,20 @@ class LogoProcessingTest {
     @Test
     fun everyBundledLogoIsListedReadableAndLicensed() {
         val bundled = LogoLibrary.bundled()
-        kotlin.test.assertTrue(bundled.size >= 8, "expected the generated logos, got ${bundled.map { it.name }}")
-        val licences = LogoLibrary::class.java.getResource("/logos/LOGOS.md")!!.readText()
+        val (thirdParty, originals) = bundled.partition { it.name.startsWith("terceiros/") }
+        kotlin.test.assertTrue(originals.size >= 8, "expected the generated logos, got ${originals.map { it.name }}")
+        kotlin.test.assertTrue(thirdParty.isNotEmpty(), "expected the third-party gallery")
+        val ownLicences = LogoLibrary::class.java.getResource("/logos/LOGOS.md")!!.readText()
+        val thirdPartyNotice = LogoLibrary::class.java.getResource("/logos/terceiros/LEIAME.md")!!.readText()
         for (e in bundled) {
             val img = assertNotNull(LogoLibrary.original(e), "cannot read ${e.name}")
-            assertEquals(800, img.width)
-            kotlin.test.assertTrue("`${e.name}`" in licences, "${e.name} has no author/licence row in LOGOS.md")
+            val file = e.name.substringAfterLast('/')
+            if (e in originals) {
+                assertEquals(800, img.width)
+                kotlin.test.assertTrue("`$file`" in ownLicences, "$file has no author/licence row in LOGOS.md")
+            } else {
+                kotlin.test.assertTrue("`$file`" in thirdPartyNotice, "$file is not listed in terceiros/LEIAME.md")
+            }
             assertEquals(uv21.byteCount, LogoProcessing.rgb565(img, uv21, LogoFit.Fit).size)
         }
     }

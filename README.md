@@ -132,5 +132,7 @@ Trabalho derivado do CHIRP, de Dan Smith e dos colaboradores do projeto
 Public License v3.0**. Veja [LICENSE](LICENSE).
 
 - As configurações prontas em `app/src/desktopMain/resources/stock_configs/` vêm do CHIRP.
-- O ícone e as logos incluídas são originais deste projeto, desenhados em código
+- O ícone e as 8 logos originais são deste projeto, desenhados em código
   (`tools/AppIcon.kt` e `tools/LogoArt.kt`), sob a mesma licença.
+- As imagens em `app/src/desktopMain/resources/logos/terceiros/` são de terceiros,
+  **não** estão sob a GPL-3.0 e pertencem aos seus autores (veja o `LEIAME.md` da pasta).

@@ -102,9 +102,3 @@ compose.desktop {
         }
     }
 }
-
-// Logo gallery folder for `gradlew :app:run` only. Packaged apps don't get this
-// property and use ~/.chirp-rea/logos, so no developer path ends up in the installer.
-tasks.withType<JavaExec>().matching { it.name == "run" }.configureEach {
-    systemProperty("chirprea.logos", rootProject.file("logos").absolutePath)
-}

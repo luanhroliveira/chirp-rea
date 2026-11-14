@@ -1,0 +1,26 @@
+# Third-party pictures shipped in the logo gallery. See LEIAME.md.
+barraca-fogueira-noite.jfif
+bart-radio.jfif
+born-to-hunt-cranio-cervo.jfif
+camp-vibes-fogueira.jfif
+caveira-boina-rosa-dos-ventos.png
+caveira-bombeiro-wtf-over.jfif
+caveira-chapeu-bandana.jfif
+caveira-cowboy-touros.jfif
+cobra-naja-kaio.jfif
+emblema-lift-hunt-eat.jfif
+flechas-bussola-moto-aventura.jfif
+flechas-cruzadas-acampamento.jfif
+gato-maine-coon-chapeu.jfif
+homer-radio.jfif
+im-not-lost-im-exploring.jfif
+jipe-montanhas.jfif
+lagarto-cowboy.jfif
+lobo-explore-the-wild.jfif
+lontra-cowboy.jfif
+macaco-charuto.jfif
+mochila-placa-home-adventure.jfif
+motociclista-bussola-explore.jfif
+motociclista-por-do-sol.jfif
+radioamador-antena-parabolica.jfif
+rosa-dos-ventos.jfif

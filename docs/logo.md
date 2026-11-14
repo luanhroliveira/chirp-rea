@@ -26,8 +26,11 @@ UV-17ProGPS, incluindo o **UV-21 Pro**.
 
 | Seção | De onde vem |
 |---|---|
-| **Incluídas no app** | 8 logos originais que acompanham o CHIRP-REA (fogueira, montanhas, bússola, rádio 73, torre CQ, lua e floresta, estrada, sinal) |
-| **Minhas imagens** | a sua pasta pessoal: `%USERPROFILE%\.chirp-rea\logos` no app instalado |
+| **Incluídas no app** | 8 logos originais do CHIRP-REA (fogueira, montanhas, bússola, rádio 73, torre CQ, lua e floresta, estrada, sinal) e 25 imagens de terceiros (campismo, aventura, caveiras, animais, radioamador) |
+| **Minhas imagens** | a sua pasta pessoal (botão **Abrir pasta**; no Windows, `%USERPROFILE%\.chirp-rea\logos`) |
+
+As imagens de terceiros não são obra do projeto nem estão sob a GPL-3.0; veja
+`app/src/desktopMain/resources/logos/terceiros/LEIAME.md`.
 
 Para adicionar imagens: **Abrir pasta**, copie arquivos PNG, JPG, JFIF, BMP ou GIF
 e clique em **Atualizar**. Qualquer tamanho serve: cada imagem é processada na

@@ -73,8 +73,8 @@ enum class LogoSource(val label: String) {
 
 /** A picture available in the logo gallery. */
 data class LogoEntry(val source: LogoSource, val name: String, val file: File? = null) {
-    /** File name without extension, used as the caption. */
-    val title: String get() = name.substringBeforeLast('.')
+    /** File name without folder or extension, used as the caption. */
+    val title: String get() = name.substringAfterLast('/').substringBeforeLast('.')
 
     /** Stable identity for caches and list keys. */
     val key: String get() = "$source:${file?.path ?: name}@${file?.lastModified() ?: 0}"
@@ -88,8 +88,8 @@ data class LogoEntry(val source: LogoSource, val name: String, val file: File? =
 
 /**
  * The logo gallery: pictures shipped with the app plus the user's own folder,
- * both read at runtime. The user folder defaults to `<project>/logos` when run
- * from Gradle (`-Dchirprea.logos`), otherwise `~/.chirp-rea/logos`. Originals
+ * both read at runtime. The user folder is `~/.chirp-rea/logos` (or the
+ * `chirprea.logos` system property, if set). Originals
  * are cached; rendered previews are cached per (picture, spec, fit) so
  * switching models re-renders on demand.
  */
@@ -103,12 +103,19 @@ object LogoLibrary {
         dir.also { it.mkdirs() }
     }
 
-    /** Bundled pictures are listed in resources/logos/index.txt (classpath folders can't be listed inside a jar). */
-    fun bundled(): List<LogoEntry> =
-        (LogoLibrary::class.java.getResourceAsStream("$BUNDLED_DIR/index.txt")?.bufferedReader()?.use { it.readLines() } ?: emptyList())
+    /** Sub-folders of resources/logos with their own index.txt; "" = the project's original logos. */
+    val BUNDLED_FOLDERS = listOf("", "terceiros/")
+
+    /**
+     * Bundled pictures are listed in index.txt files (classpath folders can't be
+     * listed inside a jar): first the original logos, then third-party pictures.
+     */
+    fun bundled(): List<LogoEntry> = BUNDLED_FOLDERS.flatMap { folder ->
+        (LogoLibrary::class.java.getResourceAsStream("$BUNDLED_DIR/${folder}index.txt")?.bufferedReader()?.use { it.readLines() } ?: emptyList())
             .map { it.trim() }
             .filter { it.isNotEmpty() && !it.startsWith("#") && it.substringAfterLast('.').lowercase() in EXTENSIONS }
-            .map { LogoEntry(LogoSource.Bundled, it) }
+            .map { LogoEntry(LogoSource.Bundled, folder + it) }
+    }
 
     fun user(): List<LogoEntry> =
         (folder.listFiles() ?: emptyArray())

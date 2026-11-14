@@ -143,7 +143,7 @@ class LogoController(private val state: AppState) {
 
     fun openGalleryFolder() {
         runCatching { Desktop.getDesktop().open(LogoLibrary.folder) }
-            .onFailure { error = "Não foi possível abrir ${LogoLibrary.folder}" }
+            .onFailure { error = "Não foi possível abrir a pasta de imagens" }
     }
 
     fun close() { if (!running) spec = null }
@@ -223,8 +223,7 @@ private fun Gallery(c: LogoController, spec: LogoSpec, modifier: Modifier) {
             TextButton(onClick = c::openGalleryFolder) { Text("Abrir pasta") }
         }
         Text(
-            "Miniaturas já processadas para ${spec.width} × ${spec.height} (${c.fit.label.substringBefore(" (")}). " +
-                "Minhas imagens: ${LogoLibrary.folder}",
+            "Miniaturas já processadas para ${spec.width} × ${spec.height} (${c.fit.label.substringBefore(" (")}).",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
