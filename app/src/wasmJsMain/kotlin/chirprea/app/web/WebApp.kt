@@ -70,8 +70,10 @@ fun WebApp() {
         Box(Modifier.weight(1f)) {
             ChirpApp(
                 state,
+                onChangeLogo = { actions.logo.openFor(it) },
                 welcomeText = "Arquivo › Novo para começar, Arquivo › Abrir para carregar um .csv ou .img,\n" +
-                    "ou Rádio › Baixar do rádio para ler a memória de um rádio pelo cabo USB.\n" +
+                    "Rádio › Baixar do rádio para ler a memória de um rádio pelo cabo USB,\n" +
+                    "ou Rádio › Alterar logo do rádio para trocar só a logo.\n" +
                     "Nada é enviado para servidores: tudo roda no seu navegador.",
             )
         }
@@ -79,6 +81,7 @@ fun WebApp() {
     actions.clone?.let { CloneWebDialog(it) { actions.clone = null } }
     if (actions.showStock) StockDialog(actions) { actions.showStock = false }
     if (actions.showAbout) AboutDialog { actions.showAbout = false }
+    if (actions.logo.open) WebLogoDialog(actions.logo)
 }
 
 class WebActions(private val state: AppState, private val scope: CoroutineScope) {
@@ -86,6 +89,7 @@ class WebActions(private val state: AppState, private val scope: CoroutineScope)
     var showStock by mutableStateOf(false)
     var showAbout by mutableStateOf(false)
     var stockNames by mutableStateOf<List<String>>(emptyList())
+    val logo = WebLogoState(state, scope)
 
     fun newCsv() = state.open(RadioDocument(CsvRadio(), null, "Sem título.csv"))
 
@@ -222,6 +226,8 @@ private fun MenuBar(state: AppState, a: WebActions) {
         Menu("Rádio") { close ->
             Item("Baixar do rádio…") { close(); a.startDownload() }
             Item("Enviar para o rádio…", enabled = state.current?.radio is CloneModeRadio) { close(); a.startUpload() }
+            HorizontalDivider()
+            Item("Alterar logo do rádio…") { close(); a.logo.openStandalone() }
         }
         Menu("Ajuda") { close ->
             Item("Documentação") { close(); openInNewTab("$REPO_URL/blob/main/docs/README.md") }

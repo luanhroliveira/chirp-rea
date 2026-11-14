@@ -8,6 +8,8 @@ UV-17ProGPS, incluindo o **UV-21 Pro**.
 - **Rádio › Alterar logo do rádio…** (`Alt+L`): direto, **sem baixar** o rádio antes;
   escolha o modelo no diálogo.
 - **Configurações › Básico › Tela ao ligar › Alterar logo…**: usa o modelo do rádio aberto.
+- Na [versão web](web.md) os mesmos dois caminhos existem; ao clicar em
+  **Escolher porta e enviar**, escolha a porta do cabo na janela do navegador.
 
 ## Passo a passo
 
@@ -30,7 +32,7 @@ UV-17ProGPS, incluindo o **UV-21 Pro**.
 | **Minhas imagens** | a sua pasta pessoal (botão **Abrir pasta**; no Windows, `%USERPROFILE%\.chirp-rea\logos`) |
 
 As imagens de terceiros não são obra do projeto nem estão sob a GPL-3.0; veja
-`app/src/desktopMain/resources/logos/terceiros/LEIAME.md`.
+`app/src/commonMain/resources/logos/terceiros/LEIAME.md`.
 
 Para adicionar imagens: **Abrir pasta**, copie arquivos PNG, JPG, JFIF, BMP ou GIF
 e clique em **Atualizar**. Qualquer tamanho serve: cada imagem é processada na

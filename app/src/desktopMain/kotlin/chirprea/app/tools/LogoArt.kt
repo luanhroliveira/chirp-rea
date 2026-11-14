@@ -25,7 +25,7 @@ import kotlin.random.Random
  * Original power-on logos shipped with CHIRP-REA, drawn in code so the artwork
  * is reproducible and distributed under the project's licence (GPL-3.0).
  *
- * Usage: ./gradlew :app:generateLogos   (writes app/src/desktopMain/resources/logos)
+ * Usage: ./gradlew :app:generateLogos   (writes app/src/commonMain/resources/logos)
  *
  * Canvas is square with a near-black background so the app's "Ajustar" fit
  * blends with the black letterbox on portrait (128x160) and landscape (150x128) radios.
@@ -295,7 +295,7 @@ private val LOGOS = listOf(
 )
 
 fun main(args: Array<String>) {
-    val dir = File(args.firstOrNull() ?: "src/desktopMain/resources/logos").also { it.mkdirs() }
+    val dir = File(args.firstOrNull() ?: "src/commonMain/resources/logos").also { it.mkdirs() }
     for (logo in LOGOS) {
         val img = BufferedImage(S.toInt(), S.toInt(), BufferedImage.TYPE_INT_RGB)
         val g = img.createGraphics()

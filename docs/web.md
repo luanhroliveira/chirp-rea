@@ -24,6 +24,9 @@ baseados no Chromium para computador.
 - **Arquivo › Novo / Abrir .csv ou .img / Abrir configuração pronta**
 - **Arquivo › Salvar (download)**: o navegador baixa o `.img` ou `.csv` para a
   pasta de downloads.
+- **Rádio › Alterar logo do rádio** (ou **Alterar logo…** em Configurações ›
+  Tela ao ligar): galeria, pré-visualização e envio, como no app para Windows
+  ([detalhes](logo.md)).
 - **Rádio › Baixar do rádio / Enviar para o rádio**: ao clicar em
   *Escolher porta…*, o navegador mostra a lista de portas — escolha a do cabo
   (ex.: *USB-SERIAL CH340*) e clique em **Conectar**.
@@ -35,7 +38,7 @@ baseados no Chromium para computador.
 
 | Recurso | Windows | Web |
 |---|---|---|
-| Logo da tela ao ligar | sim | ainda não |
+| Logo da tela ao ligar | sim | sim (galeria com as mesmas 33 imagens; sem "Minhas imagens") |
 | Salvar no mesmo arquivo | sim (`Ctrl+S`) | sempre como download |
 | Atalhos de teclado do menu | sim | não |
 | Precisa instalar | sim | não |

@@ -120,7 +120,7 @@ Toda a documentação de uso está em [`docs/`](docs/README.md):
 | 2 | Família Baofeng UV-17Pro / UV-21 Pro: canais, configurações, bancos, logo | ✅ validado em rádio real |
 | 2 | Instalador Windows com ícone próprio | ✅ |
 | 3 | Demais drivers do CHIRP (~195) | ⏳ |
-| 4 | Versão web (Kotlin/Wasm + Web Serial) no GitHub Pages | ✅ (logo na web: ⏳) |
+| 4 | Versão web (Kotlin/Wasm + Web Serial) no GitHub Pages, com logo | ✅ |
 
 ## Para desenvolvedores
 
@@ -141,5 +141,5 @@ Public License v3.0**. Veja [LICENSE](LICENSE).
 - As configurações prontas em `app/src/commonMain/resources/stock_configs/` vêm do CHIRP.
 - O ícone e as 8 logos originais são deste projeto, desenhados em código
   (`tools/AppIcon.kt` e `tools/LogoArt.kt`), sob a mesma licença.
-- As imagens em `app/src/desktopMain/resources/logos/terceiros/` são de terceiros,
+- As imagens em `app/src/commonMain/resources/logos/terceiros/` são de terceiros,
   **não** estão sob a GPL-3.0 e pertencem aos seus autores (veja o `LEIAME.md` da pasta).

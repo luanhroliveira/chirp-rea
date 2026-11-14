@@ -11,12 +11,6 @@ import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import javax.imageio.ImageIO
 
-enum class LogoFit(val label: String) {
-    Fit("Ajustar (bordas pretas)"),
-    Fill("Preencher (corta as sobras)"),
-    Stretch("Esticar"),
-}
-
 /**
  * Turns any picture into a radio logo. Nothing is pre-processed or stored:
  * every call renders the original image for the requested [LogoSpec], so the

@@ -61,7 +61,7 @@ tasks.register<JavaExec>("probe") {
 // Draws the original logos shipped with the app: ./gradlew :app:generateLogos
 tasks.register<JavaExec>("generateLogos") {
     group = "chirp-rea"
-    description = "Renders the bundled power-on logos into src/desktopMain/resources/logos."
+    description = "Renders the bundled power-on logos into src/commonMain/resources/logos."
     val main = kotlin.jvm("desktop").compilations.getByName("main")
     dependsOn(main.compileTaskProvider)
     classpath = files(main.output.allOutputs, main.runtimeDependencyFiles)
