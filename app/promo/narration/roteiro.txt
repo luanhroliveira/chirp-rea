@@ -1,0 +1,10 @@
+# Narração do vídeo de apresentação — uma linha por cena: número | texto
+# Gere as falas com tts.ps1 (vozes do Windows, pt-BR) e o vídeo com
+#   ./gradlew :app:promoVideo -Pnarration=app/build/promo/narration
+1 | Conheça o CHIRP-REA: programe o seu rádio no Windows, ou direto no navegador.
+2 | Conecte o rádio pelo cabo USB, e baixe em segundos todos os canais e configurações.
+3 | Na aba Memórias, edite a frequência, o nome, os tons CTCSS e DCS, o duplex, o offset e a potência de cada canal. Tudo validado para o seu rádio.
+4 | Organize os canais em dez bancos de cem canais, cada um com o nome que você quiser.
+5 | E no UV-21 Pro GPS, troque a logo da tela ao ligar: escolha uma imagem, confira a pré-visualização em cento e vinte e oito por cento e sessenta pixels, e envie direto para o rádio.
+6 | Use o instalador para Windows, ou abra no Chrome e no Edge, sem instalar nada.
+7 | CHIRP-REA. Código aberto, e compatível com o CHIRP.

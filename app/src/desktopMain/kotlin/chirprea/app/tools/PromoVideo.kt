@@ -32,11 +32,25 @@ import kotlin.math.sin
  *   ./gradlew :app:promoVideo                      -> build/promo/chirp-rea-promo.mp4
  *   ./gradlew :app:promoVideo -Pstills=3,10,20     -> PNG stills for review
  *   -Pffmpeg=C:\path\ffmpeg.exe                     (default: ffmpeg on PATH)
+ *   -Pnarration=<dir with 1.wav … 7.wav>            (voice-over; see app/promo/narration)
  */
 private const val W = 1920
 private const val H = 1080
 private const val FPS = 30
-private const val DURATION = 61.0
+// Scene lengths (s), sized so each narration line fits with some air.
+private const val L_INTRO = 7.0
+private const val L_CONNECT = 8.0
+private const val L_MEM = 14.0
+private const val L_BANKS = 10.0
+private const val L_LOGO = 14.5
+private const val L_PLAT = 6.5
+private const val L_OUTRO = 6.0
+private val SCENE_LENGTHS = listOf(L_INTRO, L_CONNECT, L_MEM, L_BANKS, L_LOGO, L_PLAT, L_OUTRO)
+private val SCENE_STARTS = SCENE_LENGTHS.runningFold(0.0) { a, b -> a + b }
+private val DURATION = SCENE_STARTS.last()
+
+/** Narration line n (1..7) starts this many seconds into its scene. */
+private val NARRATION_OFFSETS = listOf(0.8, 0.6, 0.5, 0.5, 0.5, 0.4, 0.4)
 
 private val FONT = if ("Segoe UI" in java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().availableFontFamilyNames) "Segoe UI" else Font.SANS_SERIF
 
@@ -294,7 +308,7 @@ private fun Graphics2D.progressBar(x: Double, y: Double, w: Double, frac: Double
 /** 0–6 s: rings, icon, title. */
 private fun Graphics2D.sceneIntro(t: Double) {
     val cx = W / 2.0; val cy = 430.0
-    val fade = 1 - p(t, 5.4, 6.0)
+    val fade = 1 - p(t, L_INTRO - 0.6, L_INTRO)
     withAlpha(fade) {
         rings(cx, cy, t, 560.0, TEAL, 5, 0.45)
         val s = easeBack(p(t, 0.6, 1.6))
@@ -317,9 +331,9 @@ private fun Graphics2D.sceneIntro(t: Double) {
 
 /** 6–14 s: radio connected to a laptop, downloading. */
 private fun Graphics2D.sceneConnect(t: Double) {
-    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, 7.4, 8.0))
+    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, L_CONNECT - 0.6, L_CONNECT))
     withAlpha(fade) {
-        caption("Conecte pelo cabo USB", "Rádio › Baixar do rádio — 1000 canais e configurações em segundos", t, 8.0)
+        caption("Conecte pelo cabo USB", "Rádio › Baixar do rádio — 1000 canais e configurações em segundos", t, L_CONNECT)
         val slideR = (1 - easeOut(p(t, 0.2, 1.2))) * -300
         val slideL = (1 - easeOut(p(t, 0.2, 1.2))) * 300
         val dl = p(t, 2.2, 6.4)
@@ -365,9 +379,9 @@ private val ROWS = listOf(
 
 /** 14–26 s: memory grid filling up, highlights on tones and duplex. */
 private fun Graphics2D.sceneMemories(t: Double) {
-    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, 11.4, 12.0))
+    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, L_MEM - 0.6, L_MEM))
     withAlpha(fade) {
-        caption("Memórias", "Frequência, nome, tons CTCSS/DCS, duplex, offset, modo e potência", t, 12.0)
+        caption("Memórias", "Frequência, nome, tons CTCSS/DCS, duplex, offset, modo e potência", t, L_MEM)
         val wy = 250 + (1 - easeOut(p(t, 0.2, 1.0))) * 80
         val c = appWindow(150.0, wy, 1620.0, 720.0, listOf("Memórias", "Configurações", "Bancos", "Informações", "Navegador"), 0)
         val cols = listOf("Loc" to 80.0, "Frequência" to 210.0, "Nome" to 200.0, "Modo do tom" to 170.0, "Tom" to 110.0, "DCS" to 100.0,
@@ -414,9 +428,9 @@ private fun Graphics2D.sceneMemories(t: Double) {
 
 /** 26–36 s: channels flying into 10 fixed banks, names typed. */
 private fun Graphics2D.sceneBanks(t: Double) {
-    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, 9.4, 10.0))
+    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, L_BANKS - 0.6, L_BANKS))
     withAlpha(fade) {
-        caption("Bancos", "10 bancos de 100 canais, com nomes editáveis", t, 10.0)
+        caption("Bancos", "10 bancos de 100 canais, com nomes editáveis", t, L_BANKS)
         val names = listOf("RADIOAMADOR", "AVIACAO", "REPETIDORAS", "GMRS", "", "", "", "", "", "")
         val gx = 360.0; val gy = 300.0; val cw = 270.0; val ch = 250.0
         for (i in 0 until 10) {
@@ -460,9 +474,9 @@ private fun Graphics2D.sceneBanks(t: Double) {
 
 /** 36–50 s: pick a logo, pixelate to 128x160, send over the cable, radio boots with it. */
 private fun Graphics2D.sceneLogo(t: Double) {
-    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, 13.4, 14.0))
+    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, L_LOGO - 0.6, L_LOGO))
     withAlpha(fade) {
-        caption("Logo da tela ao ligar", "UV-21 Pro GPS: imagem 128 × 160, escolhida e enviada em segundos", t, 14.0)
+        caption("Logo da tela ao ligar", "UV-21 Pro GPS: imagem 128 × 160, escolhida e enviada em segundos", t, L_LOGO)
         val names = LOGOS.keys.toList()
         val gx = 140.0; val gy = 280.0; val tw = 190.0; val th = 238.0
         val pick = 0
@@ -546,9 +560,9 @@ private fun Graphics2D.sceneLogo(t: Double) {
 
 /** 50–56 s: Windows installer and web version side by side. */
 private fun Graphics2D.scenePlatforms(t: Double) {
-    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, 5.4, 6.0))
+    val fade = easeOut(p(t, 0.0, 0.6)) * (1 - p(t, L_PLAT - 0.6, L_PLAT))
     withAlpha(fade) {
-        caption("No Windows ou no navegador", "Mesmas funções, mesmo formato de arquivos do CHIRP", t, 6.0)
+        caption("No Windows ou no navegador", "Mesmas funções, mesmo formato de arquivos do CHIRP", t, L_PLAT)
         val a1 = easeOut(p(t, 0.3, 1.1)); val a2 = easeOut(p(t, 0.7, 1.5))
         withAlpha(a1) {
             val x = 180.0 - (1 - a1) * 120; val y = 290.0
@@ -581,7 +595,7 @@ private fun Graphics2D.scenePlatforms(t: Double) {
 
 /** 56–61 s: closing card. */
 private fun Graphics2D.sceneOutro(t: Double) {
-    val a = easeOut(p(t, 0.0, 0.8)) * (1 - p(t, 4.3, 5.0))
+    val a = easeOut(p(t, 0.0, 0.8)) * (1 - p(t, L_OUTRO - 0.7, L_OUTRO))
     withAlpha(a) {
         val cx = W / 2.0
         rings(cx, 400.0, t, 420.0, CYAN, 4, 0.5)
@@ -597,13 +611,13 @@ private fun renderFrame(img: BufferedImage, t: Double) {
     g.setup()
     g.background(t)
     when {
-        t < 6.0 -> g.sceneIntro(t)
-        t < 14.0 -> g.sceneConnect(t - 6.0)
-        t < 26.0 -> g.sceneMemories(t - 14.0)
-        t < 36.0 -> g.sceneBanks(t - 26.0)
-        t < 50.0 -> g.sceneLogo(t - 36.0)
-        t < 56.0 -> g.scenePlatforms(t - 50.0)
-        else -> g.sceneOutro(t - 56.0)
+        t < SCENE_STARTS[1] -> g.sceneIntro(t)
+        t < SCENE_STARTS[2] -> g.sceneConnect(t - SCENE_STARTS[1])
+        t < SCENE_STARTS[3] -> g.sceneMemories(t - SCENE_STARTS[2])
+        t < SCENE_STARTS[4] -> g.sceneBanks(t - SCENE_STARTS[3])
+        t < SCENE_STARTS[5] -> g.sceneLogo(t - SCENE_STARTS[4])
+        t < SCENE_STARTS[6] -> g.scenePlatforms(t - SCENE_STARTS[5])
+        else -> g.sceneOutro(t - SCENE_STARTS[6])
     }
     // global fade in/out
     val f = max(1 - p(t, 0.0, 0.6), p(t, DURATION - 0.7, DURATION))
@@ -626,12 +640,30 @@ fun main(args: Array<String>) {
         return
     }
 
+    // Optional narration: <dir>/1.wav … 7.wav, one per scene, placed at scene start + offset.
+    val narration = args.getOrNull(3)?.takeIf { it.isNotBlank() }?.let(::File)
+        ?.let { dir -> (1..SCENE_LENGTHS.size).map { File(dir, "$it.wav") }.takeIf { l -> l.all(File::isFile) } }
+    val audioArgs = if (narration == null) emptyList() else buildList {
+        narration.forEach { add("-i"); add(it.absolutePath) }
+        val delays = narration.indices.joinToString(";") { i ->
+            val ms = ((SCENE_STARTS[i] + NARRATION_OFFSETS[i]) * 1000).roundToInt()
+            "[${i + 1}:a]aresample=48000,adelay=$ms:all=1[n$i]"
+        }
+        val mix = narration.indices.joinToString("") { "[n$it]" } +
+            "amix=inputs=${narration.size}:normalize=0:dropout_transition=0,volume=1.6,alimiter=limit=0.89:level=disabled,apad,atrim=0:$DURATION[aout]"
+        add("-filter_complex"); add("$delays;$mix")
+        add("-map"); add("0:v"); add("-map"); add("[aout]")
+        add("-c:a"); add("aac"); add("-b:a"); add("160k")
+    }
+    println(if (narration == null) "no narration (video only)" else "narration: ${narration.size} lines")
+
     val out = File(outDir, "chirp-rea-promo.mp4")
     val proc = ProcessBuilder(
-        ffmpeg, "-y", "-loglevel", "error",
-        "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", "${W}x$H", "-r", "$FPS", "-i", "-",
-        "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-        out.absolutePath,
+        listOf(ffmpeg, "-y", "-loglevel", "error",
+            "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", "${W}x$H", "-r", "$FPS", "-i", "-") +
+            audioArgs +
+            listOf("-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+                out.absolutePath),
     ).redirectErrorStream(true).redirectOutput(ProcessBuilder.Redirect.INHERIT).start()
     val buf = (img.raster.dataBuffer as DataBufferByte).data
     val frames = (DURATION * FPS).toInt()

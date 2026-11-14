@@ -24,3 +24,6 @@ local.properties
 # Personal radio images and exports (may contain your channels, DTMF/ANI codes)
 configs/
 *.img
+
+# Vídeo de divulgação (gerado; não versionado)
+/media/

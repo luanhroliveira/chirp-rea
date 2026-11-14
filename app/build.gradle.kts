@@ -46,6 +46,11 @@ kotlin {
     }
 }
 
+// The tool tasks below run on the same JDK the code is compiled for (not Gradle's own JDK).
+tasks.withType<JavaExec>().configureEach {
+    javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(21)) })
+}
+
 // Read-only handshake probe: ./gradlew :app:probe -Pport=COM6
 tasks.register<JavaExec>("probe") {
     group = "chirp-rea"
@@ -86,6 +91,7 @@ tasks.register<JavaExec>("promoVideo") {
         layout.buildDirectory.dir("promo").get().asFile.absolutePath,
         providers.gradleProperty("ffmpeg").orElse("ffmpeg").get(),
         providers.gradleProperty("stills").orElse("").get(),
+        providers.gradleProperty("narration").map { rootProject.file(it).absolutePath }.orElse("").get(),
     )
 }
 
